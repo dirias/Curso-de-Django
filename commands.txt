@@ -1,0 +1,7 @@
+    1  python3 -m venv venv
+    2  source ./venv/bin/activate
+    6  pip install django -U #Instala la última versión de Django
+   12  django-admin #Check Django commands available
+   13  django-admin startproject platzigram . #creates a project called platzigram on the current directoy
+   17  python3 ./manage.py #Shows the functions available to handle the project
+   18  python3 ./manage.py runserver #Starts the project
