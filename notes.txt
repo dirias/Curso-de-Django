@@ -1,3 +1,12 @@
+    # Utilities
+    Ppdb -> debugger de python
+    '''
+        # Detiene el programa y permiter explorar los objetos
+        import pdb; pdb.set_trace() 
+        # Se sale apretando control + C
+        # c y enter, continue el flujo del prorama
+    '''
+    
     1  python3 -m venv venv
     2  source ./venv/bin/activate
     6  pip install django -U #Instala la última versión de Django
