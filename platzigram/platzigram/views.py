@@ -16,3 +16,9 @@ def hi(request):
     numbers = numbers.split(',')
     dict = {"Key " + element: element for element in sorted(numbers)} 
     return JsonResponse(dict)
+def say_hi(request, name, age):
+    if age < 12:
+        message = f'Sorry {name}, you are not allowed here.'
+    else:
+        message = f'Hello, {name}! Welcome to Platzigram'
+    return HttpResponse(message)
