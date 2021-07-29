@@ -1,3 +1,4 @@
 venv/
 img/
-*__pycache__/
+platzigram/platzigram/__pycache__/*
+platzigram/posts/migrations/__pycache__/*

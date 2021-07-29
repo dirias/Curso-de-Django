@@ -14,3 +14,19 @@
    13  django-admin startproject platzigram . #creates a project called platzigram on the current directoy
    17  python3 ./manage.py #Shows the functions available to handle the project
    18  python3 ./manage.py runserver #Starts the project
+
+Crear app nueva 
+./platzigram/manage.py startapp posts  
+
+#Temas
+#Template system de django
+#Script CGI de pythonOperations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions
+Running migrations:
+  No migrations to apply.
+
+  python3 manage.py makemigrations -> Refleja los cambios del Modelo en las migraciones para luego poderlas aplicar
+  python3 manage.py migrate -> Ejecuta las migraciones
+
+# Acceder al shell de python en el project de Django
+ python3 manage.py shell
