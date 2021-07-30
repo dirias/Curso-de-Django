@@ -1,4 +1,4 @@
 venv/
 img/
-platzigram/platzigram/__pycache__/*
-platzigram/posts/migrations/__pycache__/*
+*.pyc
+*db.sqlite3
