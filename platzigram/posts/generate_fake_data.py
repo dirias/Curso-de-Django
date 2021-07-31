@@ -17,8 +17,8 @@ for i in range(50):
     full_name = fake.name().split(' ')
     user.first_name = full_name[0]
     user.last_name = full_name[1]
-    user.email = f'{user.first_name.replace(" ", "_")}@email.com'
-    user.password= f'{user.first_name}1234'
+    user.email = f'{user.first_name}.{user.last_name.replace(" ", "_")}@email.com'
+    user.password= f'{user.first_name}.{user.last_name}1234'
     user.bio = fake.text()
     #print(f'first_name: {user.last_name}, last_name{user.last_name}, email: {user.email}, password: {user.password}')
     user.save()
