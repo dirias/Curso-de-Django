@@ -15,4 +15,4 @@ class Post(models.Model):
 
     def __str__(self):
         """Return title and username"""
-        return f'{self.title} by @ {self.use.username}'
+        return f'{self.title} by @ {self.user.username}'
