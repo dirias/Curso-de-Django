@@ -3,5 +3,4 @@ img/
 *.pyc
 *db.sqlite3
 platzigram/media/
-platzigram/users/
-
+platzigram/users/picture/*
