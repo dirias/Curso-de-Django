@@ -4,30 +4,12 @@
 {% endblock head_content %}
 
 {% block container %}
-    {% if error %}
-        <p class="alert alert-danger">{{ error }}</p>
-    {% endif %}
+    
     <form action="{% url 'signup' %}" method="post">
     {% csrf_token %} <!--Siempre que se crea un formulario hay que crear el csrf-->
-    <div class="form-group">
-        <input type="text" placeholder="Username" name="username" required="true" class="form-control" >
-    </div>
-    <div class="form-group">
-        <input type="password" placeholder="Password" name="password" required="true" class="form-control" >
-    </div>
-    <div class="form-group">
-        <input type="password" placeholder="Password confirmation" name="password_confirmation" required="true" class="form-control" >
-    </div>
-    <div class="form-group">
-        <input type="text" placeholder="First name" name="first_name" required="true" class="form-control" >
-    </div>
-    <div class="form-group">
-        <input type="text" placeholder="Last name" name="last_name" required="true" class="form-control" >
-    </div>
-    <div class="form-group">
-        <input type="email" placeholder="Email address" name="email" required="true" class="form-control" >
-    </div>
-
+    
+    {{ form.as_p}}
+    
     <button class="btn btn-primary btn-block mt-5" type="submit">Register!</button>
 
     </form>

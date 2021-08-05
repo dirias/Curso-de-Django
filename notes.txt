@@ -30,3 +30,6 @@ Running migrations:
 
 # Acceder al shell de python en el project de Django
  python3 manage.py shell
+
+ Les recomiendo usar el paquete Django.contrib.humanize ([Django.contrib.humanize Documentation]), 
+ (https://docs.djangoproject.com/en/3.1/ref/contrib/humanize/
