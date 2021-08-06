@@ -5,7 +5,7 @@
 
 {% block container %}
     
-    <form action="{% url 'signup' %}" method="post">
+    <form action="{% url 'users:signup' %}" method="post">
     {% csrf_token %} <!--Siempre que se crea un formulario hay que crear el csrf-->
     
     {{ form.as_p}}
