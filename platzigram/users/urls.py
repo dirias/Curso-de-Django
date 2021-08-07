@@ -1,15 +1,13 @@
 """Users URLs."""
 # Django
 from django.urls import path
-# Class based view
-from django.views.generic import TemplateView
 
 # Models
 from users import views
 
 urlpatterns = [
     # Posts, class based view
-    path(route='<str:username>/', view=TemplateView.as_view(template_name='users/detail.html'), name='detail'),
+    path(route='<str:username>/', view=views.UserDetailView.as_view(), name='detail'),
     # Management
     path(route='users/login', view=views.login_view, name='login'),
     path(route='users/logout', view=views.logout_view, name='logout'),

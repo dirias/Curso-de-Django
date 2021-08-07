@@ -2,6 +2,8 @@
 from django.http import request
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 
 # Form
 from posts.forms import PostForm
@@ -10,13 +12,13 @@ from posts.models import Post
 
 
 # Create your views here.
-@login_required
-def list_posts(requests):
-    """
-        The def render takes 3 parameter, the request, the HTML and the context
-    """
-    posts = Post.objects.all().order_by('-created')
-    return render(requests, 'posts/feed.html', {'posts': posts})
+class PostsFeedView(LoginRequiredMixin, ListView):
+    """Return all published posts"""
+    template_name = 'posts/feed.html'
+    model = Post
+    ordering = ('-created')
+    paginate_by = 2
+    context_object_name = 'posts'
 
 @login_required
 def create_post(request):

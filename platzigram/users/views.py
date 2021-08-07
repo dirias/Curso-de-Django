@@ -1,17 +1,36 @@
 """Users view"""
 # Django
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.contrib.auth import authenticate, login,logout
+from django.views.generic import DetailView
 # Models
 from django.contrib.auth.models import User
-from users.models import Profile
-# Exeptions
-from django.db.utils import IntegrityError
+from posts.models import Post
+
 # Forms
 from users.forms import ProfileForm
 from users.forms import SignupForm
+
 # Create your views here.
+class UserDetailView(LoginRequiredMixin,DetailView):
+    """User detail view"""
+    template_name = 'users/detail.html'
+    slug_field = 'username'
+    #Como es llamado del lado del URL
+    slug_url_kwarg = 'username'
+    queryset = User.objects.all()
+    context_object_name = 'user'
+
+    """Agrega los post al detail view"""
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.get_object()
+        context['posts'] = Post.objects.filter(user=user).order_by('-created')
+        return context
+
 @login_required
 def update_profile(request):
     """Update a user's profile view"""
@@ -25,7 +44,9 @@ def update_profile(request):
             profile.biography = data['biography']
             profile.picture = data['picture']
             profile.save()
-            return redirect('users:update_profile')
+
+            url = reverse('users:detail', kwargs={'username': request.user.username})
+            return redirect(url)
     else:
         form = ProfileForm()
         
