@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth import views as auth_views
 from django.views.generic import DetailView, FormView, UpdateView
 # Models
 from django.contrib.auth.models import User
@@ -85,8 +86,21 @@ def update_profile(request):
                     'user': request.user, 
                     'form': form})
     """
+
+class LoginView(auth_views.LoginView):
+    """Login view."""
+
+    template_name = 'users/login.html'
+
+
+class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+    """Logout view."""
+
+    template_name = 'users/logged_out.html'
+
+""" Replaced by LoginView
 def login_view(request):
-    """Login view"""
+    Login view
     if request.user.is_authenticated:
         return redirect("feed")
     if request.method == 'POST':
@@ -100,6 +114,7 @@ def login_view(request):
         else:
             return render(request, 'users/login.html', {'error': 'Invalid username and password'})
     return render(request, 'users/login.html')
+"""
 
 """ Replaced by UserSignupView(
 def signup(request):
@@ -113,7 +128,11 @@ def signup(request):
         form = SignupForm()
     return render(request=request, template_name='users/signup.html', context={'form': form})
 """
+
+""" Replaced by LogoutView
 @login_required
 def logout_view(request):
     logout(request)
     return redirect('users:login')
+
+"""
