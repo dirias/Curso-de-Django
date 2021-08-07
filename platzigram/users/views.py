@@ -3,15 +3,15 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth import authenticate, login,logout
-from django.views.generic import DetailView
+from django.views.generic import DetailView, FormView, UpdateView
 # Models
 from django.contrib.auth.models import User
 from posts.models import Post
+from users.models import Profile
 
 # Forms
-from users.forms import ProfileForm
 from users.forms import SignupForm
 
 # Create your views here.
@@ -31,9 +31,38 @@ class UserDetailView(LoginRequiredMixin,DetailView):
         context['posts'] = Post.objects.filter(user=user).order_by('-created')
         return context
 
+class UserSignupView(FormView):
+    """Users sign up class view."""
+
+    template_name = 'users/signup.html'
+    form_class = SignupForm
+    success_url = reverse_lazy('users:login')
+    # To save the data
+    def form_valid(self, form):
+        """Save form data."""
+        form.save()
+        return super().form_valid(form)
+
+class UpdateProfileView(LoginRequiredMixin, UpdateView):
+    """Update profile view."""
+
+    template_name = 'users/update_profile.html'
+    model = Profile
+    fields = ['website', 'biography', 'phone_number', 'picture']
+
+    def get_object(self):
+        """Return user's profile."""
+        return self.request.user.profile
+
+    def get_success_url(self):
+        """Return to user's profile."""
+        username = self.object.user.username
+        return reverse('users:detail', kwargs={'username': username})
+
+"""Replace by UpdateProfileView
 @login_required
 def update_profile(request):
-    """Update a user's profile view"""
+    Update a user's profile view
     profile = request.user.profile
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES)
@@ -55,7 +84,7 @@ def update_profile(request):
         context={'profile': profile, 
                     'user': request.user, 
                     'form': form})
-    
+    """
 def login_view(request):
     """Login view"""
     if request.user.is_authenticated:
@@ -72,8 +101,9 @@ def login_view(request):
             return render(request, 'users/login.html', {'error': 'Invalid username and password'})
     return render(request, 'users/login.html')
 
+""" Replaced by UserSignupView(
 def signup(request):
-    """Sign up view"""
+    Sign up view
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -82,7 +112,7 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request=request, template_name='users/signup.html', context={'form': form})
-
+"""
 @login_required
 def logout_view(request):
     logout(request)
